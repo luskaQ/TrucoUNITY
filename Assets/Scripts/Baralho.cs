@@ -117,7 +117,7 @@ public class Baralho : MonoBehaviour // : MonoBehaviour faz herdar a classe da u
     {
         while (pontuacaoJogador < 12 && pontuacaoOponente < 12)
         {
-            textoBotaoTruco.enabled = true; 
+            textoBotaoTruco.enabled = true;
             texto_turno_bot.enabled = false;
             desativar_botao_erguer();
             valorMao = 1;
@@ -185,7 +185,7 @@ public class Baralho : MonoBehaviour // : MonoBehaviour faz herdar a classe da u
 
                     }
 
-                    if (resultadoDaMaozada == 0 && maozada == 1)
+                    else if (resultadoDaMaozada == 0 && maozada == 1)
                     {
                         Debug.Log("Empachou na primeira");
                         maior = true;
@@ -201,6 +201,19 @@ public class Baralho : MonoBehaviour // : MonoBehaviour faz herdar a classe da u
                         Debug.Log("Bot ganhou a maozada");
                         pont_bot_mao++;
                         playerComeca = false;
+                    }
+                    else if (resultadoDaMaozada == 0 && maozada == 2)
+                    {
+                        if (pont_player_mao > pont_bot_mao)
+                        {
+                            pont_player_mao++;
+                            break;
+                        }
+                        else
+                        {
+                            pont_bot_mao++;
+                            break;
+                        }
                     }
                 }
 
@@ -235,6 +248,9 @@ public class Baralho : MonoBehaviour // : MonoBehaviour faz herdar a classe da u
             SalvarPlacar();
             yield return StartCoroutine(limparMesaParaNovaRodada());
             yield return new WaitForSeconds(2);
+            ReiniciarJogo();
+            yield return new WaitForSeconds(2);
+
         }
 
         Debug.Log("FIM DE JOGO! Reiniciando...");
@@ -488,7 +504,7 @@ public class Baralho : MonoBehaviour // : MonoBehaviour faz herdar a classe da u
         yield return null;
 
         Debug.Log("Jogador pediu TRUCO! Aguardando resposta do bot...");
-        yield return new WaitForSeconds(1.5f); // Bot "pensa"
+        yield return new WaitForSeconds(1.5f); 
 
         bool botAceita = false;
         foreach (var carta in mao_2)
@@ -504,6 +520,7 @@ public class Baralho : MonoBehaviour // : MonoBehaviour faz herdar a classe da u
         {
             Debug.Log("Bot ACEITOU o truco!");
             aumentarValorMao();
+            botTrucou = false;
         }
         else
         {
@@ -595,6 +612,7 @@ public class Baralho : MonoBehaviour // : MonoBehaviour faz herdar a classe da u
                 yield return null;
             }
             textoBotaoTruco.enabled = true;
+            botTrucou = true;
         }
         List<int> forcaCartas = new List<int>();
         forcaCartas.Clear();

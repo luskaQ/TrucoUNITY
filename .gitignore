@@ -1,0 +1,20 @@
+# Ignorar arquivos temporários
+*.log
+*.tmp
+
+# Ignorar diretórios
+Temp/
+build/
+Library/
+Logs/
+UserSettings/
+
+# Ignorar configurações do VSCode
+.vscode/
+
+# Ignorar binários do Unity
+*.exe
+*.dll
+*.meta
+*.unitypackage
+
